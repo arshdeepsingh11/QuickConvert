@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Converter</title>
+  <link rel ="stylesheet" href ="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <header class="bg-blue-500 p-4">
+    <h1 class="text-white text-2xl font-bold">Unit Converter</h1>
+  </header>
+  <section>
+      <header>Unit Conversion</header>
+      <div class="container">
+        <div class="tab-menu">
+          <button class="active">Weight</button>
+          <button>Distance</button>
+          <button>Temperature</button>
+        </div>
+        <label for="input">Enter weight value or values (comma separated):</label>
+        <input type="text" id="input" placeholder="E.g., 120, 150, 200">
+        <button>Convert</button>
+      </div>
+    </section>
+  <main class="p-4">
+    <!-- Weight Converter -->
+    <section id="weight" class="mb-8">
+      <h2 class="text-xl font-bold mb-4">Weight Converter</h2>
+      <form id="weightForm" class="space-y-4">
+        <div>
+          <label for="weightValue" class="block">Enter weight value or velues (comma-separated list):</label>
+          <input type="text" id="weightValue" class="w-full p-2 border rounded" placeholder="e.g., 10 or 10, 20, 30">
+        </div>
+        <div>
+          <label for="weightUnit" class="block">Convert From:</label>
+          <select id="weightUnit" class="w-full p-2 border rounded">
+            <option value="kg">Kilograms (kg)</option>
+            <option value="lb">Pounds (lb)</option>
+          </select>
+        </div>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Convert</button>
+      </form>
+      <div id="weightResult" class="mt-4"></div>
+    </section>
+
+    <!-- Distance Converter -->
+    <section id="distance" class="mb-8">
+      <h2 class="text-xl font-bold mb-4">Distance Converter</h2>
+      <form id="distanceForm" class="space-y-4">
+        <div>
+          <label for="distanceValue" class="block">Enter weight value or velues (comma-separated list):</label>
+          <input type="text" id="distanceValue" class="w-full p-2 border rounded" placeholder="e.g., 10 or 10, 20, 30">
+        </div>
+        <div>
+          <label for="distanceUnit" class="block">Convert From:</label>
+          <select id="distanceUnit" class="w-full p-2 border rounded">
+            <option value="km">Kilometers (km)</option>
+            <option value="mi">Miles (mi)</option>
+          </select>
+        </div>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Convert</button>
+      </form>
+      <div id="distanceResult" class="mt-4"></div>
+    </section>
+
+    <!-- Temperature Converter -->
+    <section id="temperature">
+      <h2 class="text-xl font-bold mb-4">Temperature Converter</h2>
+      <form id="temperatureForm" class="space-y-4">
+        <div>
+          <label for="temperatureValue" class="block">Enter weight value or velues (comma-separated list):</label>
+          <input type="text" id="temperatureValue" class="w-full p-2 border rounded" placeholder="e.g., 10 or 10, 20, 30">
+        </div>
+        <div>
+          <label for="temperatureUnit" class="block">Convert From:</label>
+          <select id="temperatureUnit" class="w-full p-2 border rounded">
+            <option value="°C">Celsius (°C)</option>
+            <option value="°F">Fahrenheit (°F)</option>
+          </select>
+        </div>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Convert</button>
+      </form>
+      <div id="temperatureResult" class="mt-4"></div>
+    </section>
+  </main>
+  <script>
+function createConverter(fromUnit, toUnit) {
+  const conversions = {
+    kg: { lb: v => v * 2.2046 },
+    lb: { kg: v => v / 2.2046 },
+    km: { mi: v => v / 1.60934 },
+    mi: { km: v => v * 1.60934 },
+    "°C": { "°F": v => (v * 9/5) + 32 },
+    "°F": { "°C": v => (v - 32) * 5/9 }
+  };
+  return conversions[fromUnit]?.[toUnit] || (() => "Invalid conversion");
+}
+
+function parseInput(input) {
+  return input.includes(",") ? input.split(",").map(Number) : parseFloat(input);
+}
+
+function handleConversion(event, formId, valueId, unitId, resultId) {
+  event.preventDefault();
+  const value = parseInput(document.getElementById(valueId).value);
+  const fromUnit = document.getElementById(unitId).value;
+  const toUnit = fromUnit === "kg" ? "lb" : fromUnit === "lb" ? "kg" :
+                 fromUnit === "km" ? "mi" : fromUnit === "mi" ? "km" :
+                 fromUnit === "°C" ? "°F" : "°C";
+  const converter = createConverter(fromUnit, toUnit);
+  const result = Array.isArray(value) ? value.map(converter) : converter(value);
+  document.getElementById(resultId).innerText = `Result: ${JSON.stringify(result)} ${toUnit}`;
+}
+
+document.getElementById("weightForm").addEventListener("submit", e => handleConversion(e, "weightForm", "weightValue", "weightUnit", "weightResult"));
+document.getElementById("distanceForm").addEventListener("submit", e => handleConversion(e, "distanceForm", "distanceValue", "distanceUnit", "distanceResult"));
+document.getElementById("temperatureForm").addEventListener("submit", e => handleConversion(e, "temperatureForm", "temperatureValue", "temperatureUnit", "temperatureResult"));
+  </script>
+</body>
+</html>
