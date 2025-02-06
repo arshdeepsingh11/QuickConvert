@@ -4,87 +4,99 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Unit Converter</title>
-  <link rel ="stylesheet" href ="style.css">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
-  <header class="bg-blue-500 p-4">
-    <h1 class="text-white text-2xl font-bold">Unit Converter</h1>
+<body class="bg-gray-200">
+  <!--header-->
+  <header class="bg-blue-500 text-white px-4 py-3 text-4xl font-medium flex items-center justify-between">
+      <h1>Unit Conversion</h1>
+      <nav class="p-3 flex gap-4 rounded-lg">
+          <a href="#" class="bg-blue-600 hover:bg-blue-800 rounded-md px-3 py-2 text-xl font-medium" onclick="showTab('weight')">Weight</a>
+          <a href="#" class="bg-blue-600 hover:bg-blue-800 rounded-md px-3 py-2 text-xl font-medium" onclick="showTab('distance')">Distance</a>
+          <a href="#" class="bg-blue-600 hover:bg-blue-800 rounded-md px-3 py-2 text-xl font-medium" onclick="showTab('temperature')">Temperature</a>
+      </nav>
   </header>
-  <section>
-      <header>Unit Conversion</header>
-      <div class="container">
-        <div class="tab-menu">
-          <button class="active">Weight</button>
-          <button>Distance</button>
-          <button>Temperature</button>
-        </div>
-        <label for="input">Enter weight value or values (comma separated):</label>
-        <input type="text" id="input" placeholder="E.g., 120, 150, 200">
-        <button>Convert</button>
-      </div>
-    </section>
-  <main class="p-4">
-    <!-- Weight Converter -->
-    <section id="weight" class="mb-8">
-      <h2 class="text-xl font-bold mb-4">Weight Converter</h2>
-      <form id="weightForm" class="space-y-4">
-        <div>
-          <label for="weightValue" class="block">Enter weight value or velues (comma-separated list):</label>
-          <input type="text" id="weightValue" class="w-full p-2 border rounded" placeholder="e.g., 10 or 10, 20, 30">
-        </div>
-        <div>
-          <label for="weightUnit" class="block">Convert From:</label>
-          <select id="weightUnit" class="w-full p-2 border rounded">
-            <option value="kg">Kilograms (kg)</option>
-            <option value="lb">Pounds (lb)</option>
-          </select>
-        </div>
-        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Convert</button>
-      </form>
-      <div id="weightResult" class="mt-4"></div>
-    </section>
+  
 
-    <!-- Distance Converter -->
-    <section id="distance" class="mb-8">
-      <h2 class="text-xl font-bold mb-4">Distance Converter</h2>
-      <form id="distanceForm" class="space-y-4">
-        <div>
-          <label for="distanceValue" class="block">Enter weight value or velues (comma-separated list):</label>
-          <input type="text" id="distanceValue" class="w-full p-2 border rounded" placeholder="e.g., 10 or 10, 20, 30">
-        </div>
-        <div>
-          <label for="distanceUnit" class="block">Convert From:</label>
-          <select id="distanceUnit" class="w-full p-2 border rounded">
-            <option value="km">Kilometers (km)</option>
-            <option value="mi">Miles (mi)</option>
-          </select>
-        </div>
-        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Convert</button>
-      </form>
-      <div id="distanceResult" class="mt-4"></div>
-    </section>
 
-    <!-- Temperature Converter -->
-    <section id="temperature">
-      <h2 class="text-xl font-bold mb-4">Temperature Converter</h2>
-      <form id="temperatureForm" class="space-y-4">
-        <div>
-          <label for="temperatureValue" class="block">Enter weight value or velues (comma-separated list):</label>
-          <input type="text" id="temperatureValue" class="w-full p-2 border rounded" placeholder="e.g., 10 or 10, 20, 30">
-        </div>
-        <div>
-          <label for="temperatureUnit" class="block">Convert From:</label>
-          <select id="temperatureUnit" class="w-full p-2 border rounded">
-            <option value="°C">Celsius (°C)</option>
-            <option value="°F">Fahrenheit (°F)</option>
-          </select>
-        </div>
-        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Convert</button>
+  <div id="weight" class="tab">
+      
+      <form id="weightForm">
+          <div>
+              <label for="weightValue" class="block mb-2 font-medium mt-5 ml-2 text-black-600">Enter Weight value or values (lb or kg):</label>
+              <input type="text" id="weightValue" class="mb-4 ml-2 text-sm rounded-lg w-full p-2.5"style="max-width:95rem;" placeholder="Enter 1 or more than 1 number (e.g. 30, 40)">
+          </div>
+          <div>
+            
+              <select id="weightUnit" class="mb-4 ml-2 text-sm rounded-lg w-25 max-w-sm p-2.5">
+                  <option value="lb">Pounds to Kilograms</option>
+                  <option value="kg">Kilograms to Pounds</option>
+              </select>
+              <button type="submit" class="text-white ml-2 bg-blue-600 hover:bg-blue-800 rounded-md p-2">Convert</button>
+              <div id="weightResult" class="mt-4">
+                  <label for="weightResult" class="ml-2">Result:</label>
+                  <input id="weightResult" class="ml-2 rounded-md p-2" disabled>
+
+              </div>
+
+          </div>
+          
       </form>
-      <div id="temperatureResult" class="mt-4"></div>
-    </section>
-  </main>
+  </div>
+  
+
+  <div id="distance" class="tab hidden">
+      <form id="distanceForm">
+          <div>
+              
+              <label for="distanceValue" class="block mb-2 font-medium mt-5 ml-2 text-black-600">Enter Distance value or values (mi or km):</label>
+              <input type="text" id="distanceValue" class="mb-4 ml-2 text-sm rounded-lg w-full p-2.5"style="max-width:95rem;" placeholder="Enter 1 or more than 1 number (e.g. 30, 40)">
+          </div>
+          <div>
+              
+              <select id="distanceUnit" class="mb-4 ml-2 text-sm rounded-lg w-25 max-w-sm p-2.5">
+                  <option value="mi">Miles to Kilometers</option>
+                  <option value="km">Kilometers to Miles</option>
+                  
+              </select>
+              <button type="submit" class="text-white ml-2 bg-blue-600 hover:bg-blue-800 rounded-md p-2">Convert</button>
+
+              <div id="distanceResult" class="mt-4">
+                  <label for="distanceResult" class="ml-2">Result:</label>
+                  <input id="weightResult" class="ml-2 rounded-md p-2" disabled>
+              </div>
+
+          </div>
+          
+      </form>
+  </div>
+  
+  
+  <div id="temperature" class="tab hidden">
+
+      <form id="temperatureForm">
+          <div>
+              <!--Input field for entering wright-->
+              <label for="temperatureValue" class="block mb-2 font-medium mt-5 ml-2 text-black-600">Enter Temperature value or values (°F or °C):</label>
+              <input type="text" id="temperatureValue" class="mb-4 ml-2 text-sm rounded-lg w-full p-2.5"style="max-width:95rem;">
+          </div>
+
+          <div>
+              <!--Dropdown for selecting conversion type-->
+              <select id="temperatureUnit" class="mb-4 ml-2 text-sm rounded-lg w-25 max-w-sm p-2.5">
+                  <option value="°F">Farenheit to Celsius</option>
+                  <option value="°C">Celsius to Farenheit</option>
+              </select>
+              <button type="submit" class="text-white ml-2 bg-blue-600 hover:bg-blue-800 rounded-md p-2">Convert</button>
+              <div id="temperatureResult" class="mt-4">
+                  <label for="temperatureResult" class="ml-2">Result:</label>
+                  <input id="temperatureResult" class="ml-2 rounded-md p-2" disabled>
+              </div>
+          </div>
+          
+      </form>
+  </div>
+
   <script>
 function createConverter(fromUnit, toUnit) {
   const conversions = {
@@ -117,6 +129,12 @@ function handleConversion(event, formId, valueId, unitId, resultId) {
 document.getElementById("weightForm").addEventListener("submit", e => handleConversion(e, "weightForm", "weightValue", "weightUnit", "weightResult"));
 document.getElementById("distanceForm").addEventListener("submit", e => handleConversion(e, "distanceForm", "distanceValue", "distanceUnit", "distanceResult"));
 document.getElementById("temperatureForm").addEventListener("submit", e => handleConversion(e, "temperatureForm", "temperatureValue", "temperatureUnit", "temperatureResult"));
+
+function showTab(tab) {
+    document.querySelectorAll('.tab').forEach(el => el.classList.add('hidden'));
+    document.getElementById(tab).classList.remove('hidden');
+}
+
   </script>
 </body>
 </html>
