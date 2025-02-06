@@ -23,18 +23,19 @@
       
       <form id="weightForm">
           <div>
+            <!--Input field for entering label-->
               <label for="weightValue" class="block mb-2 font-medium mt-5 ml-2 text-black-600">Enter Weight value or values (lb or kg):</label>
-              <input type="text" id="weightValue" class="mb-4 ml-2 text-sm rounded-lg w-full p-2.5"style="max-width:95rem;" placeholder="Enter 1 or more than 1 number (e.g. 30, 40)">
+              <input type="text" id="weightValue" class="mb-4 ml-2 text-sm rounded-lg w-full p-2.5"style="max-width:95rem;">
           </div>
           <div>
-            
+
+            <!--Dropdown for selecting conversion type-->            
               <select id="weightUnit" class="mb-4 ml-2 text-sm rounded-lg w-25 max-w-sm p-2.5">
                   <option value="lb">Pounds to Kilograms</option>
                   <option value="kg">Kilograms to Pounds</option>
               </select>
               <button type="submit" class="text-white ml-2 bg-blue-600 hover:bg-blue-800 rounded-md p-2">Convert</button>
               <div id="weightResult" class="mt-4">
-                  <label for="weightResult" class="ml-2">Result:</label>
                   <input id="weightResult" class="ml-2 rounded-md p-2" disabled>
 
               </div>
@@ -48,12 +49,13 @@
   <div id="distance" class="tab hidden">
       <form id="distanceForm">
           <div>
-              
+              <!--Input field for entering distance-->
               <label for="distanceValue" class="block mb-2 font-medium mt-5 ml-2 text-black-600">Enter Distance value or values (mi or km):</label>
-              <input type="text" id="distanceValue" class="mb-4 ml-2 text-sm rounded-lg w-full p-2.5"style="max-width:95rem;" placeholder="Enter 1 or more than 1 number (e.g. 30, 40)">
+              <input type="text" id="distanceValue" class="mb-4 ml-2 text-sm rounded-lg w-full p-2.5"style="max-width:95rem;">
           </div>
           <div>
-              
+
+              <!--Dropdown for selecting conversion type-->
               <select id="distanceUnit" class="mb-4 ml-2 text-sm rounded-lg w-25 max-w-sm p-2.5">
                   <option value="mi">Miles to Kilometers</option>
                   <option value="km">Kilometers to Miles</option>
@@ -62,7 +64,6 @@
               <button type="submit" class="text-white ml-2 bg-blue-600 hover:bg-blue-800 rounded-md p-2">Convert</button>
 
               <div id="distanceResult" class="mt-4">
-                  <label for="distanceResult" class="ml-2">Result:</label>
                   <input id="weightResult" class="ml-2 rounded-md p-2" disabled>
               </div>
 
@@ -76,7 +77,7 @@
 
       <form id="temperatureForm">
           <div>
-              <!--Input field for entering wright-->
+              <!--Input field for entering temperature-->
               <label for="temperatureValue" class="block mb-2 font-medium mt-5 ml-2 text-black-600">Enter Temperature value or values (°F or °C):</label>
               <input type="text" id="temperatureValue" class="mb-4 ml-2 text-sm rounded-lg w-full p-2.5"style="max-width:95rem;">
           </div>
@@ -89,7 +90,6 @@
               </select>
               <button type="submit" class="text-white ml-2 bg-blue-600 hover:bg-blue-800 rounded-md p-2">Convert</button>
               <div id="temperatureResult" class="mt-4">
-                  <label for="temperatureResult" class="ml-2">Result:</label>
                   <input id="temperatureResult" class="ml-2 rounded-md p-2" disabled>
               </div>
           </div>
@@ -123,7 +123,11 @@ function handleConversion(event, formId, valueId, unitId, resultId) {
                  fromUnit === "°C" ? "°F" : "°C";
   const converter = createConverter(fromUnit, toUnit);
   const result = Array.isArray(value) ? value.map(converter) : converter(value);
-  document.getElementById(resultId).innerText = `Result: ${JSON.stringify(result)} ${toUnit}`;
+  const roundedResult = Array.isArray(result) ? result.map(num => Math.ceil(num * 1000) / 1000).join(', ') : Math.ceil(result * 1000) / 1000; 
+
+  const resultElement = document.getElementById(resultId);
+  resultElement.classList.add('ml-4');
+  resultElement.innerText = `Result: ${roundedResult} ${toUnit}`;
 }
 
 document.getElementById("weightForm").addEventListener("submit", e => handleConversion(e, "weightForm", "weightValue", "weightUnit", "weightResult"));
