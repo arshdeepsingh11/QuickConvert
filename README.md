@@ -21,9 +21,8 @@ QuickConvert is a lightweight and responsive static website designed to provide 
 
 ## Contributors
 
-- [Group Member 7]
 - [Sahilpreet Singh]
-- [Gyanit ]
+- [Gyanit Vasdev]
 - [Arshdeep Singh]
 - [Sneha ]
 
